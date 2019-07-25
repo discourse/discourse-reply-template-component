@@ -1,0 +1,3 @@
+en:
+  discourse_reply_template_component:
+    use_template: "Use template as reply"
