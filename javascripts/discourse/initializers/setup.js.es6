@@ -25,37 +25,27 @@ export default {
               themePrefix("discourse_reply_template_component.use_template")
             );
 
-            document.addEventListener(
-              "click",
-              function(event) {
-                if (!event.target.matches(".add-template")) return;
-                event.preventDefault();
+            $(button).on("click", () => {
+              const post = helper.getModel();
 
-                const post = helper.getModel();
+              return ajax(`/posts/${post.id}`, {
+                cache: false
+              }).then(data => {
+                const controller = getOwner(this).lookup("controller:composer");
+                const regex = /\[wrap=template\]\n(.*)\n\[\/wrap\]/gms;
+                const match = regex.exec(data.raw || "");
 
-                return ajax(`/posts/${post.id}`, {
-                  cache: false
-                }).then(data => {
-                  const controller = getOwner(this).lookup(
-                    "controller:composer"
-                  );
-
-                  const regex = /\[wrap=template\]\n(.*)\n\[\/wrap\]/gms;
-                  const match = regex.exec(data.raw || "");
-
-                  if (match && match[1]) {
-                    controller.open({
-                      action: Composer.REPLY,
-                      topicBody: match[1],
-                      draftKey: post.topic.draft_key,
-                      draftSequence: post.topic.draft_sequence,
-                      topic: post.topic
-                    });
-                  }
-                });
-              },
-              false
-            );
+                if (match && match[1]) {
+                  controller.open({
+                    action: Composer.REPLY,
+                    topicBody: match[1],
+                    draftKey: controller.topicModel.draft_key,
+                    draftSequence: controller.topicModel.draftSequence,
+                    topic: post.topic
+                  });
+                }
+              });
+            });
 
             wrap.appendChild(button);
           }
