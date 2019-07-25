@@ -5,4 +5,8 @@
   .add-template {
     margin-top: 0.5em;
   }
+
+  &+.d-wrap[data-wrap="template"] {
+    margin-top: 0.5em;
+  }
 }

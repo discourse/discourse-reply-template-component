@@ -11,43 +11,62 @@ export default {
     withPluginApi("0.8", api => {
       api.decorateCooked(
         ($post, helper) => {
-          const wrap = $post[0].querySelector(
+          const wraps = $post[0].querySelectorAll(
             'div.d-wrap[data-wrap="template"]'
           );
 
-          if (wrap) {
-            const button = document.createElement("button");
-            button.classList.add("add-template");
-            button.classList.add("btn");
-            button.classList.add("btn-default");
-            button.classList.add("btn-primary");
-            button.innerText = I18n.t(
-              themePrefix("discourse_reply_template_component.use_template")
-            );
+          if (wraps) {
+            wraps.forEach(wrap => {
+              const button = document.createElement("button");
+              button.classList.add("add-template");
+              button.classList.add("btn");
+              button.classList.add("btn-default");
+              button.classList.add("btn-primary");
+              button.innerText = I18n.t(
+                themePrefix("discourse_reply_template_component.use_template")
+              );
 
-            $(button).on("click", () => {
-              const post = helper.getModel();
+              $(button).on("click", () => {
+                const post = helper.getModel();
 
-              return ajax(`/posts/${post.id}`, {
-                cache: false
-              }).then(data => {
-                const controller = getOwner(this).lookup("controller:composer");
-                const regex = /\[wrap=template\]\n(.*)\n\[\/wrap\]/gms;
-                const match = regex.exec(data.raw || "");
+                return ajax(`/posts/${post.id}`, {
+                  cache: false
+                }).then(data => {
+                  const controller = getOwner(this).lookup(
+                    "controller:composer"
+                  );
 
-                if (match && match[1]) {
-                  controller.open({
-                    action: Composer.REPLY,
-                    topicBody: match[1],
-                    draftKey: controller.topicModel.draft_key,
-                    draftSequence: controller.topicModel.draftSequence,
-                    topic: post.topic
-                  });
-                }
+                  let regex;
+                  const key = wrap.getAttribute("data-key");
+
+                  // negative lookbehind on backticks to ensure it's not a sample
+                  if (key) {
+                    regex = new RegExp(
+                      "(?<!```\\n)\\[wrap=template key=" +
+                        key +
+                        "\\]\\n(.*?)\\n\\[\\/wrap\\]",
+                      "gms"
+                    );
+                  } else {
+                    regex = /(?<!```\n)\[wrap=template\]\n(.*?)\n\[\/wrap\]/gms;
+                  }
+
+                  const match = regex.exec(data.raw || "");
+                  if (match && match[1]) {
+                    controller.open({
+                      action: Composer.REPLY,
+                      topicBody: match[1],
+                      draftKey: controller.topicModel.draft_key,
+                      draftSequence: controller.topicModel.draftSequence,
+                      topic: post.topic,
+                      skipDraftCheck: true
+                    });
+                  }
+                });
               });
-            });
 
-            wrap.appendChild(button);
+              wrap.appendChild(button);
+            });
           }
         },
         { onlyStream: true, id: "discourse-reply-template-component" }
