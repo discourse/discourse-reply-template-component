@@ -1,6 +1,5 @@
 import { ajax } from "discourse/lib/ajax";
 import { getOwner } from "discourse-common/lib/get-owner";
-import { default as computed } from "ember-addons/ember-computed-decorators";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import Composer from "discourse/models/composer";
 
