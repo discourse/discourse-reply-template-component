@@ -37,9 +37,9 @@ export default {
 
                   const key = wrap.getAttribute("data-key");
                   const regex = new RegExp(
-                    "(?<!```\\n)\\[wrap=template(?:\\skey=" +
+                    '\\[wrap=template\\skey="' +
                       key +
-                      ")?\\]\\n((?:.|\n)*?)\\n\\[\\/wrap\\]",
+                      '"\\]\\n((?:.|\n)*?)\\n\\[\\/wrap\\]',
                     "gm"
                   );
                   const match = regex.exec(data.raw || "");
