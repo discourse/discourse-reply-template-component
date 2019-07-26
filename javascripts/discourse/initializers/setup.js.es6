@@ -21,7 +21,7 @@ export default {
               button.classList.add("btn");
               button.classList.add("btn-default");
               button.classList.add("btn-primary");
-              button.innerText = I18n.t(
+              button.innerText = wrap.getAttribute("data-label") || I18n.t(
                 themePrefix("discourse_reply_template_component.use_template")
               );
 
