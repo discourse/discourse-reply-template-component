@@ -21,6 +21,7 @@ export default {
               button.classList.add("btn");
               button.classList.add("btn-default");
               button.classList.add("btn-primary");
+
               button.innerText = wrap.getAttribute("data-label") || I18n.t(
                 themePrefix("discourse_reply_template_component.use_template")
               );
@@ -37,9 +38,9 @@ export default {
 
                   const key = wrap.getAttribute("data-key");
                   const regex = new RegExp(
-                    '\\[wrap=template\\skey="' +
+                    '\\[wrap=template.*?\\skey="' +
                       key +
-                      '"\\]\\n((?:.|\n)*?)\\n\\[\\/wrap\\]',
+                      '".*?\\]\\n((?:.|\n)*?)\\n\\[\\/wrap\\]',
                     "gm"
                   );
                   const match = regex.exec(data.raw || "");
