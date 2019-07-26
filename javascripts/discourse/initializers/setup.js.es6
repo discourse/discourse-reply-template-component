@@ -35,21 +35,13 @@ export default {
                     "controller:composer"
                   );
 
-                  let regex;
                   const key = wrap.getAttribute("data-key");
-
-                  // negative lookbehind on backticks to ensure it's not a sample
-                  if (key) {
-                    regex = new RegExp(
-                      "(?<!```\\n)\\[wrap=template key=" +
-                        key +
-                        "\\]\\n(.*?)\\n\\[\\/wrap\\]",
-                      "gms"
-                    );
-                  } else {
-                    regex = /(?<!```\n)\[wrap=template\]\n(.*?)\n\[\/wrap\]/gms;
-                  }
-
+                  const regex = new RegExp(
+                    "(?<!```\\n)\\[wrap=template(?:\\skey=" +
+                      key +
+                      ")?\\]\\n((?:.|\n)*?)\\n\\[\\/wrap\\]",
+                    "gm"
+                  );
                   const match = regex.exec(data.raw || "");
                   if (match && match[1]) {
                     controller.open({
