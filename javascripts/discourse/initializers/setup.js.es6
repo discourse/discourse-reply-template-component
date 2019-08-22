@@ -15,7 +15,7 @@ export default {
           );
 
           if (wraps) {
-            wraps.forEach(wrap => {
+            $(wraps).each((index, wrap) => {
               const button = document.createElement("button");
               button.classList.add("add-template");
               button.classList.add("btn");
