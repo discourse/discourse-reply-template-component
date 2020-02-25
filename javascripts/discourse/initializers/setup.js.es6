@@ -22,9 +22,11 @@ export default {
               button.classList.add("btn-default");
               button.classList.add("btn-primary");
 
-              button.innerText = wrap.getAttribute("data-label") || I18n.t(
-                themePrefix("discourse_reply_template_component.use_template")
-              );
+              button.innerText =
+                wrap.getAttribute("data-label") ||
+                I18n.t(
+                  themePrefix("discourse_reply_template_component.use_template")
+                );
 
               $(button).on("click", () => {
                 const post = helper.getModel();
