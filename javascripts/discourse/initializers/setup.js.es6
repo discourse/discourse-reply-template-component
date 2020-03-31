@@ -28,7 +28,45 @@ function openComposerWithTemplate(controller, post, key) {
       "gm"
     );
     const match = regex.exec(data.raw || "");
+
+    const replacers = [
+      {
+        regex: /(\$\$week_start\$\$)/g,
+        fn: () =>
+          moment()
+            .startOf("isoWeek")
+            .format("LL")
+      },
+      {
+        regex: /(\$\$week_end\$\$)/g,
+        fn: () =>
+          moment()
+            .endOf("isoWeek")
+            .format("LL")
+      },
+      {
+        regex: /(\$\$prev_week_start\$\$)/g,
+        fn: () =>
+          moment()
+            .subtract(1, "week")
+            .startOf("isoWeek")
+            .format("LL")
+      },
+      {
+        regex: /(\$\$prev_week_end\$\$)/g,
+        fn: () =>
+          moment()
+            .subtract(1, "week")
+            .endOf("isoWeek")
+            .format("LL")
+      }
+    ];
+
     if (match && match[1]) {
+      replacers.forEach(replacer => {
+        match[1] = match[1].replace(replacer.regex, replacer.fn);
+      });
+
       controller.open({
         action: Composer.REPLY,
         topicBody: match[1],
