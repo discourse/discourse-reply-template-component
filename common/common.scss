@@ -2,6 +2,16 @@
   padding: 0.5em;
   border: 1px dashed $primary-medium;
 
+  + h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin-top: 0;
+  }
+
   .add-template {
     margin-top: 0.5em;
   }
