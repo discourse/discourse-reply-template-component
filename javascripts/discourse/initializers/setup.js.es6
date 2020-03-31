@@ -31,21 +31,21 @@ function openComposerWithTemplate(controller, post, key) {
 
     const replacers = [
       {
-        regex: /(\$\$week_start\$\$)/g,
+        regex: /(\$week_start)/g,
         fn: () =>
           moment()
             .startOf("isoWeek")
             .format("LL")
       },
       {
-        regex: /(\$\$week_end\$\$)/g,
+        regex: /(\$week_end)/g,
         fn: () =>
           moment()
             .endOf("isoWeek")
             .format("LL")
       },
       {
-        regex: /(\$\$prev_week_start\$\$)/g,
+        regex: /(\$prev_week_start)/g,
         fn: () =>
           moment()
             .subtract(1, "week")
@@ -53,7 +53,7 @@ function openComposerWithTemplate(controller, post, key) {
             .format("LL")
       },
       {
-        regex: /(\$\$prev_week_end\$\$)/g,
+        regex: /(\$prev_week_end)/g,
         fn: () =>
           moment()
             .subtract(1, "week")
