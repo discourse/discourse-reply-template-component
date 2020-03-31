@@ -102,7 +102,7 @@ export default {
               const key = wrap.getAttribute("data-key");
               const label = wrap.getAttribute("data-label");
 
-              if ((post.cooked.match(/\n/g) || []).length >= 20) {
+              if ((wrap.innerText.match(/\n/g) || []).length >= 20) {
                 const topButton = buildButton(label, "top");
                 topButton.addEventListener(
                   "click",
