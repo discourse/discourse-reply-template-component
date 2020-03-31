@@ -13,7 +13,9 @@
   }
 
   .add-template {
-    margin-top: 0.5em;
+    &.top {
+      margin-bottom: 1em;
+    }
   }
 
   & + .d-wrap[data-wrap="template"] {

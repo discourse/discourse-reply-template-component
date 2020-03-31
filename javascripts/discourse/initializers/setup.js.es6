@@ -3,12 +3,16 @@ import { getOwner } from "discourse-common/lib/get-owner";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import Composer from "discourse/models/composer";
 
-function buildButton(label) {
+function buildButton(label, extraClass) {
   const button = document.createElement("button");
   button.classList.add("add-template");
   button.classList.add("btn");
   button.classList.add("btn-default");
   button.classList.add("btn-primary");
+
+  if (extraClass) {
+    button.classList.add(extraClass);
+  }
 
   button.innerText =
     label ||
@@ -99,7 +103,7 @@ export default {
               const label = wrap.getAttribute("data-label");
 
               if ((post.cooked.match(/\n/g) || []).length >= 20) {
-                const topButton = buildButton(label);
+                const topButton = buildButton(label, "top");
                 topButton.addEventListener(
                   "click",
                   openComposerWithTemplate.bind(null, controller, post, key)
@@ -107,7 +111,7 @@ export default {
                 wrap.prepend(topButton);
               }
 
-              const bottomButton = buildButton(label);
+              const bottomButton = buildButton(label, "bottom");
               bottomButton.addEventListener(
                 "click",
                 openComposerWithTemplate.bind(null, controller, post, key)
