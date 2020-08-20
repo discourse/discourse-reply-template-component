@@ -1,3 +1,4 @@
 en:
   discourse_reply_template_component:
     use_template: "Use template as reply"
+    needs_key: 'Each template needs a key attribute. eg: [wrap=template key="weekly_status"][/wrap]'

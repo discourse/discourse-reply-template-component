@@ -5,10 +5,7 @@ import Composer from "discourse/models/composer";
 
 function buildButton(label, extraClass) {
   const button = document.createElement("button");
-  button.classList.add("add-template");
-  button.classList.add("btn");
-  button.classList.add("btn-default");
-  button.classList.add("btn-primary");
+  button.classList.add("add-template", "btn", "btn-default", "btn-primary");
 
   if (extraClass) {
     button.classList.add(extraClass);
@@ -88,19 +85,30 @@ export default {
 
   initialize() {
     withPluginApi("0.8", api => {
-      api.decorateCooked(
-        ($post, helper) => {
-          const wraps = $post[0].querySelectorAll(
+      api.decorateCookedElement(
+        (cooked, helper) => {
+          const wraps = cooked.querySelectorAll(
             'div.d-wrap[data-wrap="template"]'
           );
 
           if (wraps) {
             const post = helper.getModel();
+
+            if (!post) return;
+
             const controller = getOwner(this).lookup("controller:composer");
 
             wraps.forEach(wrap => {
-              const key = wrap.getAttribute("data-key");
-              const label = wrap.getAttribute("data-label");
+              const key = wrap.dataset.key;
+              if (!key) {
+                bootbox.alert(
+                  I18n.t(
+                    themePrefix("discourse_reply_template_component.needs_key")
+                  )
+                );
+              }
+
+              const label = wrap.dataset.label;
 
               if ((wrap.innerText.match(/\n/g) || []).length >= 20) {
                 const topButton = buildButton(label, "top");

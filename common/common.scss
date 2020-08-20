@@ -18,7 +18,25 @@
     }
   }
 
+  .add-template {
+    &.bottom {
+      margin-top: 1em;
+    }
+  }
+
   & + .d-wrap[data-wrap="template"] {
     margin-top: 0.5em;
+  }
+
+  p + .add-template.bottom {
+    margin-top: 0;
+  }
+}
+
+.d-editor-preview .d-wrap[data-wrap="template"] {
+  margin-bottom: 1em;
+
+  p:last-child {
+    margin-bottom: 0;
   }
 }
