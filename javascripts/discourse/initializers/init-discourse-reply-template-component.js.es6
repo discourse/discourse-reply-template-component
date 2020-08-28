@@ -69,13 +69,12 @@ function openComposerWithTemplateAndAction(controller, post, dataset) {
     ];
 
     if (match && match[1]) {
-      let topicBody;
       replacers.forEach(replacer => {
-        topicBody = match[1].replace(replacer.regex, replacer.fn);
+        match[1] = match[1].replace(replacer.regex, replacer.fn);
       });
 
       const controllerOptions = {
-        topicBody,
+        topicBody: match[1],
         draftKey: controller.topicModel.draft_key,
         draftSequence: controller.topicModel.draftSequence,
         skipDraftCheck: true,
