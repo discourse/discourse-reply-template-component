@@ -3,7 +3,10 @@ import { getOwner } from "discourse-common/lib/get-owner";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import Composer from "discourse/models/composer";
 
-function buildButton(label, extraClass) {
+function buildButton(dataset, extraClass) {
+  const action = dataset.action || "reply";
+  const label = dataset.label;
+
   const button = document.createElement("button");
   button.classList.add("add-template", "btn", "btn-default", "btn-primary");
 
@@ -13,18 +16,20 @@ function buildButton(label, extraClass) {
 
   button.innerText =
     label ||
-    I18n.t(themePrefix("discourse_reply_template_component.use_template"));
+    I18n.t(
+      themePrefix(`discourse_reply_template_component.use_template_${action}`)
+    );
 
   return button;
 }
 
-function openComposerWithTemplate(controller, post, key) {
+function openComposerWithTemplateAndAction(controller, post, dataset) {
   return ajax(`/posts/${post.id}`, {
     cache: false
   }).then(data => {
     const regex = new RegExp(
       '\\[wrap=template.*?\\skey="' +
-        key +
+        dataset.key +
         '".*?\\]\\n((?:.|\n)*?)\\n\\[\\/wrap\\]',
       "gm"
     );
@@ -64,18 +69,39 @@ function openComposerWithTemplate(controller, post, key) {
     ];
 
     if (match && match[1]) {
+      let topicBody;
       replacers.forEach(replacer => {
-        match[1] = match[1].replace(replacer.regex, replacer.fn);
+        topicBody = match[1].replace(replacer.regex, replacer.fn);
       });
 
-      controller.open({
-        action: Composer.REPLY,
-        topicBody: match[1],
+      const controllerOptions = {
+        topicBody,
         draftKey: controller.topicModel.draft_key,
         draftSequence: controller.topicModel.draftSequence,
-        topic: post.topic,
-        skipDraftCheck: true
-      });
+        skipDraftCheck: true,
+        categoryId: dataset.categoryId || null
+      };
+
+      if (dataset.action && dataset.action === "create") {
+        controller.open(
+          Object.assign(
+            {
+              action: Composer.CREATE_TOPIC
+            },
+            controllerOptions
+          )
+        );
+      } else {
+        controller.open(
+          Object.assign(
+            {
+              action: Composer.REPLY,
+              topic: post.topic
+            },
+            controllerOptions
+          )
+        );
+      }
     }
   });
 }
@@ -108,21 +134,29 @@ export default {
                 );
               }
 
-              const label = wrap.dataset.label;
-
               if ((wrap.innerText.match(/\n/g) || []).length >= 20) {
-                const topButton = buildButton(label, "top");
+                const topButton = buildButton(wrap.dataset, "top");
                 topButton.addEventListener(
                   "click",
-                  openComposerWithTemplate.bind(null, controller, post, key)
+                  openComposerWithTemplateAndAction.bind(
+                    null,
+                    controller,
+                    post,
+                    wrap.dataset
+                  )
                 );
                 wrap.prepend(topButton);
               }
 
-              const bottomButton = buildButton(label, "bottom");
+              const bottomButton = buildButton(wrap.dataset, "bottom");
               bottomButton.addEventListener(
                 "click",
-                openComposerWithTemplate.bind(null, controller, post, key)
+                openComposerWithTemplateAndAction.bind(
+                  null,
+                  controller,
+                  post,
+                  wrap.dataset
+                )
               );
               wrap.appendChild(bottomButton);
             });
