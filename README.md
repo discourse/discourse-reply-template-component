@@ -1,4 +1,4 @@
-# discourse-repluy-template-component
+# discourse-reply-template-component
 
 ## Usage
 
