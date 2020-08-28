@@ -44,3 +44,7 @@
 ul + .d-wrap[data-wrap="template"] {
   margin-top: 1em;
 }
+
+.d-wrap[data-wrap="template"] + ul {
+  margin-top: 1em;
+}
