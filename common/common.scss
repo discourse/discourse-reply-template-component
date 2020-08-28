@@ -40,3 +40,7 @@
     margin-bottom: 0;
   }
 }
+
+ul + .d-wrap[data-wrap="template"] {
+  margin-top: 1em;
+}
