@@ -116,7 +116,7 @@ export default {
             'div.d-wrap[data-wrap="template"]'
           );
 
-          if (wraps) {
+          if (helper && wraps) {
             const post = helper.getModel();
 
             if (!post) return;
