@@ -59,8 +59,7 @@ function localDateFormat(date) {
   }
 
   const parts = [];
-  Object.keys(options).forEach(key => {
-    const value = options[key];
+  Object.entries(options).forEach(([key, value]) => {
     parts.push(`${key}=${value}`);
   });
 
