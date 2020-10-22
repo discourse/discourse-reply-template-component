@@ -39,8 +39,8 @@ function buildTagsList(tags) {
 
     const checkboxWrapper = document.createElement("div");
     checkboxWrapper.classList.add("checkbox-wrapper");
-    checkboxWrapper.appendChild(checkboxDescription);
     checkboxWrapper.appendChild(checkbox);
+    checkboxWrapper.appendChild(checkboxDescription);
 
     tagsList.appendChild(checkboxWrapper);
   });
