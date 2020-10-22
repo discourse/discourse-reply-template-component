@@ -130,12 +130,10 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
         match[1] = match[1].replace(replacer.regex, replacer.fn);
       });
 
-      const tags = [];
-      wrap
+      const tags = wrap
         .querySelectorAll("input[type=checkbox]:checked")
-        .forEach(checkbox => {
-          tags.push(`#${checkbox.value}`);
-        });
+        .values()
+        .map((checkbox) => `#${checkbox.value}`);
 
       let topicBody = match[1];
       if (tags.length) {
