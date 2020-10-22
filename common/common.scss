@@ -34,7 +34,7 @@
 
   .tags-list {
     padding: 0.5em 0;
-    border-bottom: 1px solid var(--primary-low);
+    border-bottom: 1px solid var(--primary-low, $primary-low);
     display: flex;
     flex-wrap: wrap;
 
