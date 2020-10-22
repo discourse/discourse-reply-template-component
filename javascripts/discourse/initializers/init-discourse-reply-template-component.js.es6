@@ -129,14 +129,12 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
         match[1] = match[1].replace(replacer.regex, replacer.fn);
       });
 
-      const tags = wrap
-        .querySelectorAll("input[type=checkbox]:checked")
-        .values()
-        .map((checkbox) => `#${checkbox.value}`);
-
       let topicBody = match[1];
-      if (tags.length) {
-        topicBody += `\n${tags.join(", ")}`;
+
+      const checkboxes = wrap.querySelectorAll("input[type=checkbox]:checked");
+      if (checkboxes.length) {
+        const tags = Array.from(checkboxes).map(c => `#${c.value}`);
+        topicBody += `\n\n${tags.join(", ")}`;
       }
 
       const controllerOptions = {
