@@ -23,48 +23,104 @@ function buildButton(dataset, extraClass) {
   return button;
 }
 
-function openComposerWithTemplateAndAction(controller, post, dataset) {
+function buildTagsList(tags) {
+  const tagsList = document.createElement("div");
+  tagsList.classList.add("tags-list");
+
+  tags.forEach(tag => {
+    const checkbox = document.createElement("input");
+    checkbox.classList.add("checkbox");
+    checkbox.value = tag;
+    checkbox.type = "checkbox";
+
+    const checkboxDescription = document.createElement("span");
+    checkboxDescription.classList.add("checkbox-description");
+    checkboxDescription.innerText = tag;
+
+    const checkboxWrapper = document.createElement("div");
+    checkboxWrapper.classList.add("checkbox-wrapper");
+    checkboxWrapper.appendChild(checkboxDescription);
+    checkboxWrapper.appendChild(checkbox);
+
+    tagsList.appendChild(checkboxWrapper);
+  });
+
+  return tagsList;
+}
+
+function localDateFormat(date) {
+  const options = {
+    date: date.format("YYYY-MM-DD"),
+    timezone: moment.tz.guess()
+  };
+
+  if (!date.startOf("day").isSame(date) && !date.endOf("day").isSame(date)) {
+    options.time = date.format("HH:mm");
+  }
+
+  const parts = [];
+  Object.entries(options).forEach(([key, value]) => {
+    parts.push(`${key}=${value}`);
+  });
+
+  return `[${parts.join(" ")}]`;
+}
+
+function openComposerWithTemplateAndAction(controller, post, wrap) {
+  const dataset = wrap.dataset;
+
   return ajax(`/posts/${post.id}`, {
     cache: false
   }).then(data => {
     const regex = new RegExp(
-      '\\[wrap=template.*?\\skey="' +
+      '\\[wrap=template.*?\\skey="?' +
         dataset.key +
-        '".*?\\]\\n((?:.|\n)*?)\\n\\[\\/wrap\\]',
+        '"?.*?\\]\\n((?:.|\n)*?)\\n\\[\\/wrap\\]',
       "gm"
     );
     const match = regex.exec(data.raw || "");
 
     const replacers = [
       {
+        regex: /(\$tomorrow)/g,
+        fn: () => {
+          const date = moment()
+            .add(1, "day")
+            .startOf("day");
+          return localDateFormat(date);
+        }
+      },
+      {
         regex: /(\$week_start)/g,
-        fn: () =>
-          moment()
-            .startOf("isoWeek")
-            .format("LL")
+        fn: () => {
+          const date = moment().startOf("isoWeek");
+          return localDateFormat(date);
+        }
       },
       {
         regex: /(\$week_end)/g,
-        fn: () =>
-          moment()
-            .endOf("isoWeek")
-            .format("LL")
+        fn: () => {
+          const date = moment().endOf("isoWeek");
+          return localDateFormat(date);
+        }
       },
       {
         regex: /(\$prev_week_start)/g,
-        fn: () =>
-          moment()
+        fn: () => {
+          const date = moment()
             .subtract(1, "week")
-            .startOf("isoWeek")
-            .format("LL")
+            .startOf("isoWeek");
+          return localDateFormat(date);
+        }
       },
       {
         regex: /(\$prev_week_end)/g,
-        fn: () =>
-          moment()
+        fn: () => {
+          const date = moment()
             .subtract(1, "week")
-            .endOf("isoWeek")
-            .format("LL")
+            .endOf("isoWeek");
+          return localDateFormat(date);
+        }
       }
     ];
 
@@ -73,8 +129,18 @@ function openComposerWithTemplateAndAction(controller, post, dataset) {
         match[1] = match[1].replace(replacer.regex, replacer.fn);
       });
 
+      const tags = wrap
+        .querySelectorAll("input[type=checkbox]:checked")
+        .values()
+        .map((checkbox) => `#${checkbox.value}`);
+
+      let topicBody = match[1];
+      if (tags.length) {
+        topicBody += `\n${tags.join(", ")}`;
+      }
+
       const controllerOptions = {
-        topicBody: match[1],
+        topicBody,
         draftKey: controller.topicModel.draft_key,
         draftSequence: controller.topicModel.draftSequence,
         skipDraftCheck: true,
@@ -141,10 +207,15 @@ export default {
                     null,
                     controller,
                     post,
-                    wrap.dataset
+                    wrap
                   )
                 );
                 wrap.prepend(topButton);
+              }
+
+              if (wrap.dataset.tagsList && wrap.dataset.tagsList.length) {
+                const tags = wrap.dataset.tagsList.split(",").filter(Boolean);
+                wrap.appendChild(buildTagsList(tags));
               }
 
               const bottomButton = buildButton(wrap.dataset, "bottom");
@@ -154,7 +225,7 @@ export default {
                   null,
                   controller,
                   post,
-                  wrap.dataset
+                  wrap
                 )
               );
               wrap.appendChild(bottomButton);
