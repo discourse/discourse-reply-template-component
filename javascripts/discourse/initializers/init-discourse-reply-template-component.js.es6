@@ -1,3 +1,6 @@
+import { escape } from "pretty-text/sanitizer";
+import { htmlSafe } from "@ember/template";
+import { emojiUnescape } from "discourse/lib/text";
 import { ajax } from "discourse/lib/ajax";
 import { getOwner } from "discourse-common/lib/get-owner";
 import { withPluginApi } from "discourse/lib/plugin-api";
@@ -35,7 +38,7 @@ function buildTagsList(tags) {
 
     const checkboxDescription = document.createElement("span");
     checkboxDescription.classList.add("checkbox-description");
-    checkboxDescription.innerText = tag;
+    checkboxDescription.innerHTML = htmlSafe(emojiUnescape(escape(tag)));
 
     const checkboxWrapper = document.createElement("div");
     checkboxWrapper.classList.add("checkbox-wrapper");
@@ -133,7 +136,7 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
 
       const checkboxes = wrap.querySelectorAll("input[type=checkbox]:checked");
       if (checkboxes.length) {
-        const tags = Array.from(checkboxes).map(c => `#${c.value}`);
+        const tags = Array.from(checkboxes).mapBy("value");
         topicBody += `\n\n${tags.join(", ")}`;
       }
 
