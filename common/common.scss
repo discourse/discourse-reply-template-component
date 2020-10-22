@@ -1,6 +1,6 @@
 .d-wrap[data-wrap="template"] {
   padding: 0.5em;
-  border: 1px dashed $primary-medium;
+  border: 5px solid var(--primary-low, $primary-low);
 
   + h1,
   h2,
@@ -30,6 +30,24 @@
 
   p + .add-template.bottom {
     margin-top: 0;
+  }
+
+  .tags-list {
+    padding: 0.5em 0;
+    border-bottom: 1px solid var(--primary-low);
+    display: flex;
+    flex-wrap: wrap;
+
+    .checkbox-description {
+      margin-right: 0.25em;
+    }
+
+    .checkbox-wrapper {
+      display: flex;
+      align-items: center;
+      margin-right: 0.5em;
+      padding: 0.25em 0;
+    }
   }
 }
 
