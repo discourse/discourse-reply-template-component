@@ -1,0 +1,5 @@
+nl:
+  discourse_reply_template_component:
+    use_template_reply: "Gebruik een sjabloon als antwoord"
+    use_template_create: "Gebruik sjabloon als nieuw onderwerp"
+    needs_key: 'Elke sjabloon heeft een sleutelattribuut nodig. Bijvoorbeeld: [wrap=template key="weekly_status"][/wrap]'

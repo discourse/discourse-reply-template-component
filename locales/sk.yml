@@ -1,0 +1,5 @@
+sk:
+  discourse_reply_template_component:
+    use_template_reply: "Ako odpoveď použite šablónu"
+    use_template_create: "Použiť šablónu ako novú tému"
+    needs_key: 'Každá šablóna vyžaduje kľúčový atribút. Napríklad: [wrap=template key="weekly_status"][/wrap]'

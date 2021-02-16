@@ -1,0 +1,5 @@
+hi:
+  discourse_reply_template_component:
+    use_template_reply: "उत्तर के रूप में टेम्पलेट का उपयोग करें"
+    use_template_create: "नए विषय के रूप में टेम्पलेट का उपयोग करें"
+    needs_key: 'प्रत्येक टेम्पलेट को एक प्रमुख विशेषता की आवश्यकता होती है। उदाहरण के लिए: [wrap=template key="weekly_status"][/wrap]'

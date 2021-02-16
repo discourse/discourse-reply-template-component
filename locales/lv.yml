@@ -1,0 +1,5 @@
+lv:
+  discourse_reply_template_component:
+    use_template_reply: "Izmantojiet veidni kā atbildi"
+    use_template_create: "Izmantojiet veidni kā jaunu tēmu"
+    needs_key: 'Katrai veidnei ir nepieciešams galvenais atribūts. Piemēram: [wrap=template key="weekly_status"][/wrap]'

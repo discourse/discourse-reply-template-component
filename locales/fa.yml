@@ -1,0 +1,5 @@
+fa:
+  discourse_reply_template_component:
+    use_template_reply: "از الگو به عنوان پاسخ استفاده کنید"
+    use_template_create: "از الگو به عنوان موضوع جدید استفاده کنید"
+    needs_key: 'هر الگو به یک ویژگی اصلی نیاز دارد. مثلا: [wrap=template key="weekly_status"][/wrap]'

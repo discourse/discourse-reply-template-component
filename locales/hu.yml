@@ -1,0 +1,5 @@
+hu:
+  discourse_reply_template_component:
+    use_template_reply: "Használja a sablont válaszként"
+    use_template_create: "Használja a sablont új témaként"
+    needs_key: 'Minden sablonhoz szükséges egy kulcsattribútum. Például: [wrap=template key="weekly_status"][/wrap]'

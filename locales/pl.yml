@@ -1,0 +1,5 @@
+pl:
+  discourse_reply_template_component:
+    use_template_reply: "Użyj szablonu jako odpowiedzi"
+    use_template_create: "Użyj szablonu jako nowego tematu"
+    needs_key: 'Każdy szablon potrzebuje atrybutu kluczowego. Na przykład: [wrap=template key="weekly_status"][/wrap]'

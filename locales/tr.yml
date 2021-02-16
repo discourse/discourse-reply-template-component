@@ -1,0 +1,5 @@
+tr:
+  discourse_reply_template_component:
+    use_template_reply: "Şablonu yanıt olarak kullan"
+    use_template_create: "Şablonu yeni konu olarak kullan"
+    needs_key: 'Her şablonun bir anahtar özelliğe ihtiyacı vardır. Örneğin: [wrap=template key="weekly_status"][/wrap]'

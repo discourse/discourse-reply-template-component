@@ -1,0 +1,5 @@
+fr:
+  discourse_reply_template_component:
+    use_template_reply: "Utiliser le modèle comme réponse"
+    use_template_create: "Utiliser le modèle comme nouveau sujet"
+    needs_key: 'Chaque modèle a besoin d'un attribut clé. Par exemple: [wrap=template key="weekly_status"][/wrap]'

@@ -1,0 +1,5 @@
+kk:
+  discourse_reply_template_component:
+    use_template_reply: "Үлгіні жауап ретінде қолданыңыз"
+    use_template_create: "Үлгіні жаңа тақырып ретінде қолданыңыз"
+    needs_key: 'Әр шаблонға негізгі атрибут қажет. Мысалға: [wrap=template key="weekly_status"][/wrap]'

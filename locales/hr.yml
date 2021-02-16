@@ -1,0 +1,5 @@
+hr:
+  discourse_reply_template_component:
+    use_template_reply: "Koristite predložak kao odgovor"
+    use_template_create: "Koristite predložak kao novu temu"
+    needs_key: 'Svaki predložak treba ključni atribut. Na primjer: [wrap=template key="weekly_status"][/wrap]'

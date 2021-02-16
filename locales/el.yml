@@ -1,0 +1,5 @@
+el:
+  discourse_reply_template_component:
+    use_template_reply: "Χρησιμοποιήστε το πρότυπο ως απάντηση"
+    use_template_create: "Χρησιμοποιήστε το πρότυπο ως νέο θέμα"
+    needs_key: 'Κάθε πρότυπο χρειάζεται ένα βασικό χαρακτηριστικό. Για παράδειγμα: [wrap=template key="weekly_status"][/wrap]'

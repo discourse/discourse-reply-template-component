@@ -1,0 +1,5 @@
+da:
+  discourse_reply_template_component:
+    use_template_reply: "Brug skabelon som svar"
+    use_template_create: "Brug skabelon som nyt emne"
+    needs_key: 'Hver skabelon har brug for en nøgleattribut. For eksempel: [wrap=template key="weekly_status"][/wrap]'

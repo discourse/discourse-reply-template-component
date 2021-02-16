@@ -1,0 +1,5 @@
+bg:
+  discourse_reply_template_component:
+    use_template_reply: "Използвайте шаблон като отговор"
+    use_template_create: "Използвайте шаблон като нова тема"
+    needs_key: 'Всеки шаблон се нуждае от ключов атрибут. Например: [wrap=template key="weekly_status"][/wrap]'

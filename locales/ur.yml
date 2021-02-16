@@ -1,0 +1,5 @@
+ur:
+  discourse_reply_template_component:
+    use_template_reply: "جواب کے بطور ٹیمپلیٹ استعمال کریں"
+    use_template_create: "نئے عنوان کے طور پر ٹیمپلیٹ کا استعمال کریں"
+    needs_key: 'ہر ٹیمپلیٹ کو ایک کلیدی صفت کی ضرورت ہوتی ہے۔ مثال کے طور پر: [wrap=template key="weekly_status"][/wrap]'

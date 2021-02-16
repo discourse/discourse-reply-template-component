@@ -1,0 +1,5 @@
+vi:
+  discourse_reply_template_component:
+    use_template_reply: "Sử dụng mẫu làm câu trả lời"
+    use_template_create: "Sử dụng mẫu làm chủ đề mới"
+    needs_key: 'Mỗi mẫu cần một thuộc tính khóa. Ví dụ: [wrap=template key="weekly_status"][/wrap]'

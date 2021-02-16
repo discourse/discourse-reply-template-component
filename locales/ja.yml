@@ -1,0 +1,5 @@
+ja:
+  discourse_reply_template_component:
+    use_template_reply: "テンプレートを返信として使用する"
+    use_template_create: "テンプレートを新しいトピックとして使用する"
+    needs_key: '各テンプレートにはキー属性が必要です。 例えば： [wrap=template key="weekly_status"][/wrap]'

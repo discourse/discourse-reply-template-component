@@ -1,0 +1,5 @@
+es:
+  discourse_reply_template_component:
+    use_template_reply: "Usar plantilla como respuesta"
+    use_template_create: "Usar plantilla como tema nuevo"
+    needs_key: 'Cada plantilla necesita un atributo clave. Por ejemplo: [wrap=template key="weekly_status"][/wrap]'

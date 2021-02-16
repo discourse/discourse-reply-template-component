@@ -1,0 +1,5 @@
+fi:
+  discourse_reply_template_component:
+    use_template_reply: "Käytä mallia vastauksena"
+    use_template_create: "Käytä mallia uutena aiheena"
+    needs_key: 'Jokainen malli tarvitsee avaimen määritteen. Esimerkiksi: [wrap=template key="weekly_status"][/wrap]'

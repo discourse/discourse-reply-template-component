@@ -1,0 +1,5 @@
+he:
+  discourse_reply_template_component:
+    use_template_reply: "השתמש בתבנית כתשובה"
+    use_template_create: "השתמש בתבנית כנושא חדש"
+    needs_key: 'כל תבנית זקוקה למאפיין מפתח. לדוגמה: [wrap=template key="weekly_status"][/wrap]'

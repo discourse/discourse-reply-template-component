@@ -1,0 +1,5 @@
+ro:
+  discourse_reply_template_component:
+    use_template_reply: "Folosiți șablonul ca răspuns"
+    use_template_create: "Folosiți șablonul ca subiect nou"
+    needs_key: 'Fiecare șablon are nevoie de un atribut cheie. De exemplu: [wrap=template key="weekly_status"][/wrap]'

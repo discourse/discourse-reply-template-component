@@ -1,0 +1,5 @@
+ko:
+  discourse_reply_template_component:
+    use_template_reply: "답장으로 템플릿 사용"
+    use_template_create: "새 주제로 템플릿 사용"
+    needs_key: '각 템플릿에는 키 속성이 필요합니다. 예를 들면 : [wrap=template key="weekly_status"][/wrap]'

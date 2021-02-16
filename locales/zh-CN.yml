@@ -1,0 +1,5 @@
+zh-CN:
+  discourse_reply_template_component:
+    use_template_reply: "使用模板作为回复"
+    use_template_create: "使用模板作为新主题"
+    needs_key: '每个模板都需要一个关键属性。 例如： [wrap=template key="weekly_status"][/wrap]'

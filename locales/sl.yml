@@ -1,0 +1,5 @@
+sl:
+  discourse_reply_template_component:
+    use_template_reply: "Kot odgovor uporabite predlogo"
+    use_template_create: "Uporabi predlogo kot novo temo"
+    needs_key: 'Vsaka predloga potrebuje ključni atribut. Na primer: [wrap=template key="weekly_status"][/wrap]'

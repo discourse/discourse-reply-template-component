@@ -1,0 +1,5 @@
+pt:
+  discourse_reply_template_component:
+    use_template_reply: "Use o modelo como resposta"
+    use_template_create: "Use o modelo como novo tópico"
+    needs_key: 'Cada modelo precisa de um atributo principal. Por exemplo: [wrap=template key="weekly_status"][/wrap]'

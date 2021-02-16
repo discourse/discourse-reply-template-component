@@ -1,0 +1,5 @@
+cs:
+  discourse_reply_template_component:
+    use_template_reply: "Jako odpověď použijte šablonu"
+    use_template_create: "Použít šablonu jako nové téma"
+    needs_key: 'Každá šablona vyžaduje klíčový atribut. Například: [wrap=template key="weekly_status"][/wrap]'

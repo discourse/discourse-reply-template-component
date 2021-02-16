@@ -1,0 +1,5 @@
+ka:
+  discourse_reply_template_component:
+    use_template_reply: "გამოიყენეთ შაბლონი პასუხის მისაღებად"
+    use_template_create: "გამოიყენეთ შაბლონი, როგორც ახალი თემა"
+    needs_key: 'თითოეულ შაბლონს სჭირდება ძირითადი ატრიბუტი. Მაგალითად: [wrap=template key="weekly_status"][/wrap]'

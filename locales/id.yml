@@ -1,0 +1,5 @@
+id:
+  discourse_reply_template_component:
+    use_template_reply: "Gunakan template sebagai balasan"
+    use_template_create: "Gunakan template sebagai topik baru"
+    needs_key: 'Setiap template membutuhkan atribut kunci. Sebagai contoh: [wrap=template key="weekly_status"][/wrap]'

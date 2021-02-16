@@ -1,0 +1,5 @@
+de:
+  discourse_reply_template_component:
+    use_template_reply: "Verwenden Sie die Vorlage als Antwort"
+    use_template_create: "Vorlage als neues Thema verwenden"
+    needs_key: 'Jede Vorlage benötigt ein Schlüsselattribut. Zum Beispiel: [wrap=template key="weekly_status"][/wrap]'

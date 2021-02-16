@@ -1,0 +1,5 @@
+sr:
+  discourse_reply_template_component:
+    use_template_reply: "Use template in a reply"
+    use_template_create: "Use template in a new topic"
+    needs_key: 'Each template needs a key attribute. For example:  [wrap=template key="weekly_status"][/wrap]'

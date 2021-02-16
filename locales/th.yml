@@ -1,0 +1,5 @@
+th:
+  discourse_reply_template_component:
+    use_template_reply: "ใช้เทมเพลตเป็นการตอบกลับ"
+    use_template_create: "ใช้เทมเพลตเป็นหัวข้อใหม่"
+    needs_key: 'แต่ละเทมเพลตต้องมีคีย์แอตทริบิวต์ ตัวอย่างเช่น: [wrap=template key="weekly_status"][/wrap]'

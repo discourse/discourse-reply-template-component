@@ -1,0 +1,5 @@
+lt:
+  discourse_reply_template_component:
+    use_template_reply: "Naudokite šabloną kaip atsakymą"
+    use_template_create: "Naudokite šabloną kaip naują temą"
+    needs_key: 'Kiekvienam šablonui reikia pagrindinio atributo. Pavyzdžiui: [wrap=template key="weekly_status"][/wrap]'

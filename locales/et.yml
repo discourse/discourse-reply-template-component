@@ -1,0 +1,5 @@
+et:
+  discourse_reply_template_component:
+    use_template_reply: "Kasuta malli vastusena"
+    use_template_create: "Uue teemana kasutage malli"
+    needs_key: 'Iga mall vajab võtme atribuuti. Näiteks: [wrap=template key="weekly_status"][/wrap]'
