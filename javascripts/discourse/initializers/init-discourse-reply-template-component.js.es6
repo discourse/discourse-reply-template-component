@@ -1,3 +1,4 @@
+import showModal from "discourse/lib/show-modal";
 import { escape } from "pretty-text/sanitizer";
 import { htmlSafe } from "@ember/template";
 import { emojiUnescape } from "discourse/lib/text";
@@ -90,6 +91,12 @@ function _reply(dataset, post, controllerOptions) {
 }
 
 function openComposerWithTemplateAndAction(controller, post, wrap) {
+  const currentUser = getOwner(this).lookup("current-user:main");
+  if (!currentUser) {
+    showModal("login");
+    return;
+  }
+
   const dataset = wrap.dataset;
 
   return ajax(`/posts/${post.id}`, {
