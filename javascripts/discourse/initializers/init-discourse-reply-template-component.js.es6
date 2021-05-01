@@ -69,6 +69,26 @@ function localDateFormat(date) {
   return `[${parts.join(" ")}]`;
 }
 
+function _create(dataset, post, controllerOptions) {
+  return Object.assign(controllerOptions, {
+    action: Composer.CREATE_TOPIC
+  });
+}
+
+function _createPm(dataset, post, controllerOptions) {
+  return Object.assign(controllerOptions, {
+    action: Composer.PRIVATE_MESSAGE,
+    topic: post.topic
+  });
+}
+
+function _reply(dataset, post, controllerOptions) {
+  return Object.assign(controllerOptions, {
+    action: Composer.REPLY,
+    topic: post.topic
+  });
+}
+
 function openComposerWithTemplateAndAction(controller, post, wrap) {
   const dataset = wrap.dataset;
 
@@ -140,7 +160,7 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
         topicBody += `\n\n${tags.join(", ")}`;
       }
 
-      const controllerOptions = {
+      let controllerOptions = {
         topicBody,
         draftKey: controller.topicModel.draft_key,
         draftSequence: controller.topicModel.draftSequence,
@@ -148,26 +168,21 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
         categoryId: dataset.categoryId || null
       };
 
-      if (dataset.action && dataset.action === "create") {
-        controller.open(
-          Object.assign(
-            {
-              action: Composer.CREATE_TOPIC
-            },
-            controllerOptions
-          )
-        );
-      } else {
-        controller.open(
-          Object.assign(
-            {
-              action: Composer.REPLY,
-              topic: post.topic
-            },
-            controllerOptions
-          )
-        );
+      switch (dataset.action) {
+        case "create":
+          controllerOptions = _create(dataset, post, controllerOptions);
+          break;
+        case "create_pm":
+          controllerOptions = _createPm(dataset, post, controllerOptions);
+          break;
+        case "reply":
+        case null:
+        case undefined:
+          controllerOptions = _reply(dataset, post, controllerOptions);
+          break;
       }
+
+      controller.open(controllerOptions);
     }
   });
 }
