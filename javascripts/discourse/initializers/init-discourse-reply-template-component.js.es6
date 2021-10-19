@@ -90,6 +90,14 @@ function _reply(dataset, post, controllerOptions) {
   });
 }
 
+function _buildDraftKey(topicId, action) {
+  if (!action || action === "reply") {
+    return `topic_${topicId}`;
+  }
+
+  return "new_topic";
+}
+
 function openComposerWithTemplateAndAction(controller, post, wrap) {
   const currentUser = getOwner(this).lookup("current-user:main");
   if (!currentUser) {
@@ -169,8 +177,10 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
 
       let controllerOptions = {
         topicBody,
-        draftKey: controller.topicModel.draft_key,
-        draftSequence: controller.topicModel.draftSequence,
+        draftKey:
+          controller.topicModel?.draft_key ||
+          _buildDraftKey(post.topic_id, dataset.action),
+        draftSequence: controller.topicModel?.draftSequence,
         skipDraftCheck: true,
         categoryId: dataset.categoryId || null
       };
