@@ -120,6 +120,13 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
 
     const replacers = [
       {
+        regex: /(\$today)/g,
+        fn: () => {
+          const date = moment().startOf("day");
+          return localDateFormat(date);
+        }
+      },
+      {
         regex: /(\$tomorrow)/g,
         fn: () => {
           const date = moment()
