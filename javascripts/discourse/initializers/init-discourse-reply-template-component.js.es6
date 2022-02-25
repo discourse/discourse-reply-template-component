@@ -122,8 +122,7 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
       {
         regex: /(\$today)/g,
         fn: () => {
-          const date = moment()
-            .startOf("day");
+          const date = moment().startOf("day");
           return localDateFormat(date);
         }
       },
