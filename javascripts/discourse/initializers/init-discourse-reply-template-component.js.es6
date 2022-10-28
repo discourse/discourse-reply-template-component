@@ -214,7 +214,7 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
 export default {
   name: "discourse-reply-template-component-setup",
 
-  initialize() {
+  initialize(container) {
     withPluginApi("0.8", api => {
       api.decorateCookedElement(
         (cooked, helper) => {
@@ -232,7 +232,8 @@ export default {
             wraps.forEach(wrap => {
               const key = wrap.dataset.key;
               if (!key) {
-                bootbox.alert(
+                const dialog = container.lookup("service:dialog");
+                dialog.alert(
                   I18n.t(
                     themePrefix("discourse_reply_template_component.needs_key")
                   )
