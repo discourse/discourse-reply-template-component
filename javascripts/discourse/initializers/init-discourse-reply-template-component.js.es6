@@ -31,7 +31,7 @@ function buildTagsList(tags) {
   const tagsList = document.createElement("div");
   tagsList.classList.add("tags-list");
 
-  tags.forEach(tag => {
+  tags.forEach((tag) => {
     const checkbox = document.createElement("input");
     checkbox.classList.add("checkbox");
     checkbox.value = tag;
@@ -55,7 +55,7 @@ function buildTagsList(tags) {
 function localDateFormat(date) {
   const options = {
     date: date.format("YYYY-MM-DD"),
-    timezone: moment.tz.guess()
+    timezone: moment.tz.guess(),
   };
 
   if (!date.startOf("day").isSame(date) && !date.endOf("day").isSame(date)) {
@@ -72,21 +72,21 @@ function localDateFormat(date) {
 
 function _create(dataset, post, controllerOptions) {
   return Object.assign(controllerOptions, {
-    action: Composer.CREATE_TOPIC
+    action: Composer.CREATE_TOPIC,
   });
 }
 
 function _createPm(dataset, post, controllerOptions) {
   return Object.assign(controllerOptions, {
     action: Composer.PRIVATE_MESSAGE,
-    topic: post.topic
+    topic: post.topic,
   });
 }
 
 function _reply(dataset, post, controllerOptions) {
   return Object.assign(controllerOptions, {
     action: Composer.REPLY,
-    topic: post.topic
+    topic: post.topic,
   });
 }
 
@@ -108,8 +108,8 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
   const dataset = wrap.dataset;
 
   return ajax(`/posts/${post.id}`, {
-    cache: false
-  }).then(data => {
+    cache: false,
+  }).then((data) => {
     const regex = new RegExp(
       '\\[wrap=template.*?\\skey="?' +
         dataset.key +
@@ -124,53 +124,47 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
         fn: () => {
           const date = moment().startOf("day");
           return localDateFormat(date);
-        }
+        },
       },
       {
         regex: /(\$tomorrow)/g,
         fn: () => {
-          const date = moment()
-            .add(1, "day")
-            .startOf("day");
+          const date = moment().add(1, "day").startOf("day");
           return localDateFormat(date);
-        }
+        },
       },
       {
         regex: /(\$week_start)/g,
         fn: () => {
           const date = moment().startOf("isoWeek");
           return localDateFormat(date);
-        }
+        },
       },
       {
         regex: /(\$week_end)/g,
         fn: () => {
           const date = moment().endOf("isoWeek");
           return localDateFormat(date);
-        }
+        },
       },
       {
         regex: /(\$prev_week_start)/g,
         fn: () => {
-          const date = moment()
-            .subtract(1, "week")
-            .startOf("isoWeek");
+          const date = moment().subtract(1, "week").startOf("isoWeek");
           return localDateFormat(date);
-        }
+        },
       },
       {
         regex: /(\$prev_week_end)/g,
         fn: () => {
-          const date = moment()
-            .subtract(1, "week")
-            .endOf("isoWeek");
+          const date = moment().subtract(1, "week").endOf("isoWeek");
           return localDateFormat(date);
-        }
-      }
+        },
+      },
     ];
 
     if (match && match[1]) {
-      replacers.forEach(replacer => {
+      replacers.forEach((replacer) => {
         match[1] = match[1].replace(replacer.regex, replacer.fn);
       });
 
@@ -189,7 +183,7 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
           _buildDraftKey(post.topic_id, dataset.action),
         draftSequence: controller.topicModel?.draftSequence,
         skipDraftCheck: true,
-        categoryId: dataset.categoryId || null
+        categoryId: dataset.categoryId || null,
       };
 
       switch (dataset.action) {
@@ -214,8 +208,8 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
 export default {
   name: "discourse-reply-template-component-setup",
 
-  initialize() {
-    withPluginApi("0.8", api => {
+  initialize(container) {
+    withPluginApi("0.8", (api) => {
       api.decorateCookedElement(
         (cooked, helper) => {
           const wraps = cooked.querySelectorAll(
@@ -229,10 +223,11 @@ export default {
 
             const controller = getOwner(this).lookup("controller:composer");
 
-            wraps.forEach(wrap => {
+            wraps.forEach((wrap) => {
               const key = wrap.dataset.key;
               if (!key) {
-                bootbox.alert(
+                const dialog = container.lookup("service:dialog");
+                dialog.alert(
                   I18n.t(
                     themePrefix("discourse_reply_template_component.needs_key")
                   )
@@ -275,5 +270,5 @@ export default {
         { onlyStream: true, id: "discourse-reply-template-component" }
       );
     });
-  }
+  },
 };
