@@ -70,16 +70,20 @@ function localDateFormat(date) {
   return `[${parts.join(" ")}]`;
 }
 
-function _create(dataset, post, controllerOptions) {
+function _create(dataset, post, controllerOptions, title) {
   return Object.assign(controllerOptions, {
     action: Composer.CREATE_TOPIC,
+    title: title,
   });
 }
 
-function _createPm(dataset, post, controllerOptions) {
+function _createPm(dataset, post, controllerOptions, title) {
   return Object.assign(controllerOptions, {
     action: Composer.PRIVATE_MESSAGE,
     topic: post.topic,
+    recipients: dataset.recipients,
+    usernames: dataset.usernames,
+    title: title,
   });
 }
 
@@ -118,47 +122,65 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
     );
     const match = regex.exec(data.raw || "");
 
+    const formatContext = (context) =>
+      context === "title" ? date.format("L") : localDateFormat(date);
+
     const replacers = [
       {
         regex: /(\$today)/g,
-        fn: () => {
+        fn: (context) => {
           const date = moment().startOf("day");
-          return localDateFormat(date);
+          return formatContext(context, date);
         },
       },
       {
         regex: /(\$tomorrow)/g,
-        fn: () => {
+        fn: (context) => {
           const date = moment().add(1, "day").startOf("day");
-          return localDateFormat(date);
+          return formatContext(context, date);
         },
       },
       {
         regex: /(\$week_start)/g,
-        fn: () => {
+        fn: (context) => {
           const date = moment().startOf("isoWeek");
-          return localDateFormat(date);
+          return formatContext(context, date);
         },
       },
       {
         regex: /(\$week_end)/g,
-        fn: () => {
+        fn: (context) => {
           const date = moment().endOf("isoWeek");
-          return localDateFormat(date);
+          return formatContext(context, date);
         },
       },
       {
         regex: /(\$prev_week_start)/g,
-        fn: () => {
+        fn: (context) => {
           const date = moment().subtract(1, "week").startOf("isoWeek");
-          return localDateFormat(date);
+          return formatContext(context, date);
         },
       },
       {
         regex: /(\$prev_week_end)/g,
-        fn: () => {
+        fn: (context) => {
           const date = moment().subtract(1, "week").endOf("isoWeek");
-          return localDateFormat(date);
+          return formatContext(context, date);
+        },
+      },
+      {
+        regex: /(\$username)/g,
+        fn: () => {
+          return currentUser.username;
+        },
+      },
+      {
+        regex: /(\$name)/g,
+        fn: () => {
+          if (currentUser?.name) {
+            return currentUser.name;
+          }
+          return "";
         },
       },
     ];
@@ -169,6 +191,13 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
       });
 
       let topicBody = match[1];
+      let title = dataset.title;
+
+      if (title) {
+        replacers.forEach((replacer) => {
+          title = title.replace(replacer.regex, () => replacer.fn("title"));
+        });
+      }
 
       const checkboxes = wrap.querySelectorAll("input[type=checkbox]:checked");
       if (checkboxes.length) {
@@ -188,10 +217,15 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
 
       switch (dataset.action) {
         case "create":
-          controllerOptions = _create(dataset, post, controllerOptions);
+          controllerOptions = _create(dataset, post, controllerOptions, title);
           break;
         case "create_pm":
-          controllerOptions = _createPm(dataset, post, controllerOptions);
+          controllerOptions = _createPm(
+            dataset,
+            post,
+            controllerOptions,
+            title
+          );
           break;
         case "reply":
         case null:
