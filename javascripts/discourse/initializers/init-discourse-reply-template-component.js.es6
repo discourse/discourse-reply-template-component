@@ -234,7 +234,6 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
           break;
       }
 
-      console.log(controllerOptions);
       controller.open(controllerOptions);
     }
   });
