@@ -80,10 +80,10 @@ function _create(dataset, post, controllerOptions, title) {
 function _createPm(dataset, post, controllerOptions, title) {
   return Object.assign(controllerOptions, {
     action: Composer.PRIVATE_MESSAGE,
-    topic: post.topic,
     recipients: dataset.recipients,
     usernames: dataset.usernames,
     title: title,
+    archetypeId: "private_message",
   });
 }
 
@@ -122,7 +122,7 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
     );
     const match = regex.exec(data.raw || "");
 
-    const formatContext = (context) =>
+    const formatContext = (context, date) =>
       context === "title" ? date.format("L") : localDateFormat(date);
 
     const replacers = [
@@ -234,6 +234,7 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
           break;
       }
 
+      console.log(controllerOptions);
       controller.open(controllerOptions);
     }
   });
