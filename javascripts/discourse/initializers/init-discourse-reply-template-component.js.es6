@@ -183,6 +183,17 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
           return "";
         },
       },
+      {
+        regex: /\=([A-Z]*)\=/g,
+        fn: (m) => {
+          // match any placeholder values set up via discourse-placeholder-theme-component
+          const strippedMatch = m.replace(/\=/g, "");
+          const inputtedValue = document.querySelector(
+            `[data-wrap="placeholder"] [data-key="${strippedMatch}"]`
+          )?.value;
+          return inputtedValue || m;
+        },
+      },
     ];
 
     if (match && match[1]) {
