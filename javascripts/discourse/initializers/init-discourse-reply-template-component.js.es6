@@ -184,6 +184,22 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
         },
       },
       {
+        regex: /\$user_field_(\d+)/g,
+        fn: (m) => {
+          const matchPart = m.match(/\$user_field_(\d+)/);
+
+          if (match) {
+            const numberPart = parseInt(matchPart[1]); // Extract the number part from the matched pattern
+
+            // Check if the field exists before accessing it to avoid errors
+            if (currentUser.custom_fields.hasOwnProperty(`user_field_${numberPart}`)) {
+              return currentUser.custom_fields[`user_field_${numberPart}`];
+            }
+          }
+          return "";
+        },
+      },
+      {
         regex: /\=([A-Z]*)\=/g,
         fn: (m) => {
           // match any placeholder values set up via discourse-placeholder-theme-component
