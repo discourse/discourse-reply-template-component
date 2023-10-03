@@ -3,7 +3,7 @@ import { escape } from "pretty-text/sanitizer";
 import { htmlSafe } from "@ember/template";
 import { emojiUnescape } from "discourse/lib/text";
 import { ajax } from "discourse/lib/ajax";
-import { getOwner } from "discourse-common/lib/get-owner";
+import { getOwnerWithFallback } from "discourse-common/lib/get-owner";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import Composer from "discourse/models/composer";
 
@@ -103,7 +103,7 @@ function _buildDraftKey(topicId, action) {
 }
 
 function openComposerWithTemplateAndAction(controller, post, wrap) {
-  const currentUser = getOwner(this).lookup("current-user:main");
+  const currentUser = getOwnerWithFallback(this).lookup("current-user:main");
   if (!currentUser) {
     showModal("login");
     return;
@@ -266,7 +266,7 @@ export default {
 
             if (!post) return;
 
-            const controller = getOwner(this).lookup("controller:composer");
+            const controller = getOwnerWithFallback(this).lookup("controller:composer");
 
             wraps.forEach((wrap) => {
               const key = wrap.dataset.key;
