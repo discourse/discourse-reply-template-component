@@ -1,11 +1,12 @@
-import showModal from "discourse/lib/show-modal";
-import { escape } from "pretty-text/sanitizer";
 import { htmlSafe } from "@ember/template";
-import { emojiUnescape } from "discourse/lib/text";
+import { escape } from "pretty-text/sanitizer";
 import { ajax } from "discourse/lib/ajax";
-import { getOwnerWithFallback } from "discourse-common/lib/get-owner";
 import { withPluginApi } from "discourse/lib/plugin-api";
+import showModal from "discourse/lib/show-modal";
+import { emojiUnescape } from "discourse/lib/text";
 import Composer from "discourse/models/composer";
+import { getOwnerWithFallback } from "discourse-common/lib/get-owner";
+import I18n from "discourse-i18n";
 
 function buildButton(dataset, extraClass) {
   const action = dataset.action || "reply";
@@ -73,7 +74,7 @@ function localDateFormat(date) {
 function _create(dataset, post, controllerOptions, title) {
   return Object.assign(controllerOptions, {
     action: Composer.CREATE_TOPIC,
-    title: title,
+    title,
   });
 }
 
@@ -82,7 +83,7 @@ function _createPm(dataset, post, controllerOptions, title) {
     action: Composer.PRIVATE_MESSAGE,
     recipients: dataset.recipients,
     usernames: dataset.usernames,
-    title: title,
+    title,
     archetypeId: "private_message",
   });
 }
@@ -103,7 +104,7 @@ function _buildDraftKey(topicId, action) {
 }
 
 function openComposerWithTemplateAndAction(controller, post, wrap) {
-  const currentUser = getOwnerWithFallback(this).lookup("current-user:main");
+  const currentUser = getOwnerWithFallback(this).lookup("service:current-user");
   if (!currentUser) {
     showModal("login");
     return;
@@ -264,9 +265,13 @@ export default {
           if (helper && wraps) {
             const post = helper.getModel();
 
-            if (!post) return;
+            if (!post) {
+              return;
+            }
 
-            const controller = getOwnerWithFallback(this).lookup("controller:composer");
+            const controller = getOwnerWithFallback(this).lookup(
+              "controller:composer"
+            );
 
             wraps.forEach((wrap) => {
               const key = wrap.dataset.key;
