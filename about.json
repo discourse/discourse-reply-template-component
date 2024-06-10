@@ -1,6 +1,6 @@
 {
-  "name": "discourse-reply-template-component",
-  "about_url": "https://github.com/discourse/discourse-reply-template-component",
+  "name": "Reply Templates",
+  "about_url": "https://meta.discourse.org/t/reply-template/162373",
   "license_url": null,
   "assets": {},
   "component": true
