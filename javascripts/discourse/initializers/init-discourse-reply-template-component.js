@@ -269,9 +269,8 @@ export default {
               return;
             }
 
-            const controller = getOwnerWithFallback(this).lookup(
-              "controller:composer"
-            );
+            const controller =
+              getOwnerWithFallback(this).lookup("service:composer");
 
             wraps.forEach((wrap) => {
               const key = wrap.dataset.key;
