@@ -149,9 +149,23 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
         },
       },
       {
+        regex: /(\$business_week_start)/g,
+        fn: (context) => {
+          const date = moment().day("monday").startOf("day");
+          return formatContext(context, date);
+        },
+      },
+      {
         regex: /(\$week_end)/g,
         fn: (context) => {
           const date = moment().endOf("isoWeek");
+          return formatContext(context, date);
+        },
+      },
+      {
+        regex: /(\$business_week_end)/g,
+        fn: (context) => {
+          const date = moment().day("friday").endOf("day");
           return formatContext(context, date);
         },
       },
@@ -163,9 +177,26 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
         },
       },
       {
+        regex: /(\$prev_business_week_start)/g,
+        fn: (context) => {
+          const date = moment()
+            .subtract(1, "week")
+            .day("monday")
+            .startOf("day");
+          return formatContext(context, date);
+        },
+      },
+      {
         regex: /(\$prev_week_end)/g,
         fn: (context) => {
           const date = moment().subtract(1, "week").endOf("isoWeek");
+          return formatContext(context, date);
+        },
+      },
+      {
+        regex: /(\$prev_business_week_end)/g,
+        fn: (context) => {
+          const date = moment().subtract(1, "week").day("friday").endOf("day");
           return formatContext(context, date);
         },
       },
