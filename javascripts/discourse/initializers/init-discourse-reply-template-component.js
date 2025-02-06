@@ -1,12 +1,12 @@
 import { htmlSafe } from "@ember/template";
 import { escape } from "pretty-text/sanitizer";
 import { ajax } from "discourse/lib/ajax";
+import { getOwnerWithFallback } from "discourse/lib/get-owner";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import showModal from "discourse/lib/show-modal";
 import { emojiUnescape } from "discourse/lib/text";
 import Composer from "discourse/models/composer";
-import { getOwnerWithFallback } from "discourse-common/lib/get-owner";
-import I18n from "discourse-i18n";
+import { i18n } from "discourse-i18n";
 
 function buildButton(dataset, extraClass) {
   const action = dataset.action || "reply";
@@ -21,7 +21,7 @@ function buildButton(dataset, extraClass) {
 
   button.innerText =
     label ||
-    I18n.t(
+    i18n(
       themePrefix(`discourse_reply_template_component.use_template_${action}`)
     );
 
@@ -308,7 +308,7 @@ export default {
               if (!key) {
                 const dialog = container.lookup("service:dialog");
                 dialog.alert(
-                  I18n.t(
+                  i18n(
                     themePrefix("discourse_reply_template_component.needs_key")
                   )
                 );
