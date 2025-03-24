@@ -13,7 +13,7 @@ function buildButton(dataset, extraClass) {
   const label = dataset.label;
 
   const button = document.createElement("button");
-  button.classList.add("add-template", "btn", "btn-default", "btn-primary");
+  button.classList.add("add-template", "btn", "btn-primary");
 
   if (extraClass) {
     button.classList.add(extraClass);
