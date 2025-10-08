@@ -286,7 +286,7 @@ export default {
   name: "discourse-reply-template-component-setup",
 
   initialize(container) {
-    withPluginApi("0.8", (api) => {
+    withPluginApi((api) => {
       api.decorateCookedElement(
         (cooked, helper) => {
           const wraps = cooked.querySelectorAll(
