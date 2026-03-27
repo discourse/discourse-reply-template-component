@@ -3,7 +3,6 @@ import { escape } from "pretty-text/sanitizer";
 import { ajax } from "discourse/lib/ajax";
 import { getOwnerWithFallback } from "discourse/lib/get-owner";
 import { withPluginApi } from "discourse/lib/plugin-api";
-import showModal from "discourse/lib/show-modal";
 import { emojiUnescape } from "discourse/lib/text";
 import Composer from "discourse/models/composer";
 import { i18n } from "discourse-i18n";
@@ -106,7 +105,6 @@ function _buildDraftKey(topicId, action) {
 function openComposerWithTemplateAndAction(controller, post, wrap) {
   const currentUser = getOwnerWithFallback(this).lookup("service:current-user");
   if (!currentUser) {
-    showModal("login");
     return;
   }
 
