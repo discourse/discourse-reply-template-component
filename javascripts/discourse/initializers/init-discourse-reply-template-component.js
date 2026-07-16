@@ -242,7 +242,7 @@ function openComposerWithTemplateAndAction(controller, post, wrap) {
 
       const checkboxes = wrap.querySelectorAll("input[type=checkbox]:checked");
       if (checkboxes.length) {
-        const tags = Array.from(checkboxes).mapBy("value");
+        const tags = Array.from(checkboxes, (cb) => cb.value);
         topicBody += `\n\n${tags.join(", ")}`;
       }
 
